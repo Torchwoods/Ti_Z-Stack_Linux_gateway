@@ -1,0 +1,66 @@
+#! /bin/bash
+#
+# track servers - send a signal if any server dies other than NWKMGR
+#
+# arg1 - pid of guy we should send a signal to
+# arg2 - list of PIDs we should track
+
+export requestor=$1
+export PIDS="$2"
+
+VERBOSE=0
+if [ -n "$VERBOSE_TRACKER" ]; then
+  if [ $VERBOSE_TRACKER -ge 1 ]; then
+  	VERBOSE=$VERBOSE_TRACKER
+  fi
+fi
+
+total=0
+for pid in $PIDS; do
+	total=$((total + 1))
+done
+echo tracking $total pids, $PIDS
+echo when we see something missing we will send a SIGUSR2 to pid $requestor
+
+nameof()
+{
+if [ -e /proc/$1/cmdline ]; then
+	export NAME=`cat /proc/$1/cmdline | awk -F "\0" ' { print $1 }' | head -1 | tr -d "\n"`
+	return 1;
+else
+	export NAME="pid $1"
+	return 0;
+fi
+}
+
+# poll pids to see if anyone died 
+while [ true ]; do
+	sleep 1
+	count=0
+	if [ $VERBOSE -ge 1 ]; then
+		echo ================================================
+		date
+	fi
+	for pid in $PIDS; do
+		nameof $pid
+		if [ $? -eq 1 ]; then
+			if [ $VERBOSE -ge 1 ]; then
+				echo "pid $pid ($NAME) is alive"
+			fi
+			count=$((count + 1))
+		else
+			echo "pid $pid is not there"
+			break;
+		fi
+	done
+	if [ $count -ne $total ]; then
+		echo count is $count, not $total
+		break;	
+	fi
+done
+
+echo kill -SIGUSR2 $requestor
+     kill -SIGUSR2 $requestor
+
+sleep 1
+echo tracker exiting

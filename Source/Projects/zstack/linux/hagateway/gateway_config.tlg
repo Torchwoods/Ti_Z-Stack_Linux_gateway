@@ -1,0 +1,215 @@
+// Texas Instruments Linux Gateway Endpoint Configuration File (.tlg)
+// Copyright 2014 Texas Instruments Incorporated. All rights reserved.
+
+// comments
+// the rest of a line (after //) is ignored
+// any whitespace separates tokens (lines, spaces, tabs, comma)
+// order is not important (that is, if a name is referred to in may be before or after the reference)
+
+// keywords
+// all keywords are lowercase. Custom names should be MixedCase, so as not to confuse with keywords
+// Names follow C rules and are case sensitive. Numbers may be decimal or hex (e.g. 0x0Ae4)
+//
+// pollcontrol - configurable fields for sleepy devices using Poll Control
+// endpoint    - a description of an endpoint
+// endpointdef - a simple descriptor
+// clusterlist - list of clusters (for either input or output)
+// attr        - a single attribute
+// attrlist    - a list of attributes
+// attrdef     - includes and endpoint, cluster, and list of attributes
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Poll Control Configuration fields:
+//  Use: pollcontrol { longPollInterval, shortPollInterval }
+// 
+//  longPollInterval:
+//    * The maximum amount of time in quarterseconds between MAC Data Requests 
+//      from the end device to its parent.
+//    * DataType: uint32
+//    * Range: 0x04 - 0x6E0000
+//
+//  shortPollInterval:
+//    * The number of quarterseconds that an end device waits between MAC Data Requests 
+//      to its parent when expecting data (i.e. in fast poll mode).
+//    * DataType: uint16
+//    * Range: 0x01 - 0xFFFF
+pollcontrol { 0x14, 0x02 }
+
+// Cluster IDs (not built-in)
+#define LevelControl  0x0008
+#define ColorControl  0x0300
+
+// Color Control Attribute IDs
+#define ColorControl_CurrentHue_AttrId_d 0x0000
+#define ColorControl_CurrentSaturation_AttrId_d 0x0001
+#define ColorControl_RemainingTime_AttrId_d 0x0002
+#define ColorControl_CurrentX_AttrId_d 0x0003
+#define ColorControl_CurrentY_AttrId_d 0x0004
+#define ColorControl_DriftCompensation_AttrId_d 0x0005
+#define ColorControl_CompensationText_AttrId_d 0x0006
+#define ColorControl_ColorTemperature_AttrId_d 0x0007
+#define ColorControl_ColorMode_AttrId_d 0x0008
+
+#define ColorControl_NumberOfPrimaries_AttrId_d 0x0010
+#define ColorControl_Primary1X_AttrId_d 0x0011
+#define ColorControl_Primary1Y_AttrId_d 0x0012
+#define ColorControl_Primary1Intensity_AttrId_d 0x0013
+#define ColorControl_Primary2X_AttrId_d 0x0015
+#define ColorControl_Primary2Y_AttrId_d 0x0016
+#define ColorControl_Primary2Intensity_AttrId_d 0x0017
+#define ColorControl_Primary3X_AttrId_d 0x0019
+#define ColorControl_Primary3X_AttrId_d 0x001A
+#define ColorControl_Primary3Y_AttrId_d 0x001B
+
+#define ColorControl_Primary4X_AttrId_d 0x0020
+#define ColorControl_Primary4Y_AttrId_d 0x0021
+#define ColorControl_Primary4Intensity_AttrId_d 0x0022
+#define ColorControl_Primary5X_AttrId_d 0x0024
+#define ColorControl_Primary5Y_AttrId_d 0x0025
+#define ColorControl_Primary5Intensity_AttrId_d 0x0026
+#define ColorControl_Primary6X_AttrId_d 0x0028
+#define ColorControl_Primary6Y_AttrId_d 0x0029
+#define ColorControl_Primary6Intensity_AttrId_d 0x002A
+
+#define ColorControl_WhitePointX_AttrId_d 0x0030
+#define ColorControl_WhitePointY_AttrId_d 0x0031
+#define ColorControl_ColorPointRX_AttrId_d 0x0032
+#define ColorControl_ColorPointRY_AttrId_d 0x0033
+#define ColorControl_ColorPointRIntensity_AttrId_d 0x0034
+#define ColorControl_ColorPointGX_AttrId_d 0x0036
+#define ColorControl_ColorPointGY_AttrId_d 0x0037
+#define ColorControl_ColorPointGIntensity_AttrId_d 0x0038
+#define ColorControl_ColorPointBX_AttrId_d 0x003A
+#define ColorControl_ColorPointBY_AttrId_d 0x003B
+#define ColorControl_ColorPointBIntensity_AttrId_d 0x003C
+
+// Application endpoints IDs may be in the range 3-254
+// endpoint IDs 0-2 are reserved by the system (ZDO, NwkMgr, GatewayMgr)
+// endpoint ID 14 is reserved as well (OtaMgr)
+// the same endpointdef may be used by more than one endpoint
+
+// endpoint { ID, EndpointDef, AttrDef }
+endpoint { 3, OnOffLightEpDef, OnOffAttrList }
+endpoint { 4, LevelControlEpDef, LevelControlAttrList }
+endpoint { 5, ColorControlEpDef, ColorControlAttrList }
+endpoint { 6, ColorControlEpDef, ColorControlAttrList }
+
+// endpointdefs define all fields for a simple descriptor (with the exception of the endpoint id)
+//  uint16 profileid;
+//  uint16 deviceid;
+//  uint8  devicever;
+//  uint8  n_inputclusters;
+//  uint16 *inputclusters;
+//  uint8  n_outputclusters;
+//  uint16 *outputclusters;
+endpointdef OnOffLightEpDef { ha_profile, ha_onofflight, 0, OnOffInputClusters, OnOffOutputClusters }
+endpointdef LevelControlEpDef { ha_profile, ha_dimmablelight, 0, LevelControlInputClusters, LevelControlOutputClusters }
+endpointdef ColorControlEpDef { ha_profile, ha_colordimmablelight, 0, ColorControlInputClusters, ColorControlOutputClusters }
+
+// clusterlists include a list of clusters
+//
+// the common ZigBee clusters, such as basic, groups can use the symbol, rather than the number (e.g. 0x0006 or onoff)
+clusterlist OnOffInputClusters { basic, identify, groups, scenes, onoff, 0x0501 }
+clusterlist OnOffOutputClusters { onoff, 0x0402 }
+clusterlist LevelControlInputClusters { basic, identify, groups, scenes, onoff, 0x0008 }
+clusterlist LevelControlOutputClusters { onoff, 0x0008 }
+clusterlist ColorControlInputClusters { basic, identify, groups, scenes, onoff, 0x0008, 0x0300 }
+clusterlist ColorControlOutputClusters { onoff, 0x0008, 0x0300 }
+
+// attrs include an identifier, data type, and access control
+//  uint16  attrid;         // in hex (0x050E) or decimal (0, 99, etc..)
+//  uint8   datatype;       // boolean, uint8, uint16, uint32, or the ZigBee hex equivalent
+//  uint8   accesscontrol;  // rdonly or rdwr
+// special case: if attribute datatype is charstring or octetstring, a length byte follows the type
+//               { 99, charstring, 16, rdwr } // a character string up to 16 bytes
+attr OnOffAttr { onoff, 0, boolean, rdonly }
+attr LevelControl_CurrentLevelAttr { LevelControl, 0, uint8, rdonly }
+attr LevelControl_RemainingTimeAttr { LevelControl, 0x0001, uint16, rdonly }
+attr LevelControl_OnOffTransitionTimeAttr { LevelControl, 0x0010, uint16, rdwr }
+attr LevelControl_OnLevelAttr { LevelControl, 0x0011, uint8, rdwr }
+
+attr ColorControl_CurrentHueAttr { ColorControl, ColorControl_CurrentHue_AttrId_d, uint8, rdonly }
+attr ColorControl_CurrentSaturationAttr { ColorControl, ColorControl_CurrentSaturation_AttrId_d, uint8, rdonly }
+attr ColorControl_RemainingTimeAttr { ColorControl, ColorControl_RemainingTime_AttrId_d, uint16, rdonly }
+attr ColorControl_CurrentXAttr { ColorControl, ColorControl_CurrentX_AttrId_d, uint16, rdonly }
+attr ColorControl_CurrentYAttr { ColorControl, ColorControl_CurrentY_AttrId_d, uint16, rdonly }
+attr ColorControl_DriftCompensationAttr { ColorControl, ColorControl_DriftCompensation_AttrId_d, uint8, rdonly }
+attr ColorControl_CompensationTextAttr { ColorControl, ColorControl_CompensationText_AttrId_d, charstr, 16, rdonly }
+attr ColorControl_ColorTemperatureAttr { ColorControl, ColorControl_ColorTemperature_AttrId_d, uint16, rdonly }
+attr ColorControl_ColorModeAttr { ColorControl, ColorControl_ColorMode_AttrId_d, uint16, rdonly }
+
+attr ColorControl_NumberOfPrimaries { ColorControl, ColorControl_NumberOfPrimaries_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary1X { ColorControl, ColorControl_Primary1X_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary1Y { ColorControl, ColorControl_Primary1Y_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary1Intensity { ColorControl, ColorControl_Primary1Intensity_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary2X { ColorControl, ColorControl_Primary2X_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary2Y { ColorControl, ColorControl_Primary2Y_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary2Intensity { ColorControl, ColorControl_Primary2Intensity_AttrId_d, charstr, 16, rdonly }
+attr ColorControl_Primary3X { ColorControl, ColorControl_Primary3X_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary3X { ColorControl, ColorControl_Primary3X_AttrId_d, uint16, rdonly }
+
+attr ColorControl_Primary4X { ColorControl, ColorControl_Primary4X_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary4Y { ColorControl, ColorControl_Primary4Y_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary4Intensity { ColorControl, ColorControl_Primary4Intensity_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary5X { ColorControl, ColorControl_Primary5X_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary5Y { ColorControl, ColorControl_Primary5Y_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary5Intensity { ColorControl, ColorControl_Primary5Intensity_AttrId_d, uint8, rdonly }
+attr ColorControl_Primary6X { ColorControl, ColorControl_Primary6X_AttrId_d, charstr, 16, rdonly }
+attr ColorControl_Primary6Y { ColorControl, ColorControl_Primary6Y_AttrId_d, uint16, rdonly }
+attr ColorControl_Primary6Intensity { ColorControl, ColorControl_Primary6Intensity_AttrId_d, uint16, rdonly }
+
+attr ColorControl_WhitePointX { ColorControl, ColorControl_WhitePointX_AttrId_d, uint8, rdwr }
+attr ColorControl_WhitePointY { ColorControl, ColorControl_WhitePointY_AttrId_d, uint8, rdwr }
+attr ColorControl_ColorPointRX { ColorControl, ColorControl_ColorPointRX_AttrId_d, uint16, rdwr }
+attr ColorControl_ColorPointRY { ColorControl, ColorControl_ColorPointRY_AttrId_d, uint16, rdwr }
+attr ColorControl_ColorPointRIntensity { ColorControl, ColorControl_ColorPointRIntensity_AttrId_d, uint16, rdwr }
+attr ColorControl_ColorPointGX { ColorControl, ColorControl_ColorPointGX_AttrId_d, uint8, rdwr }
+attr ColorControl_ColorPointGY { ColorControl, ColorControl_ColorPointGY_AttrId_d, charstr, 16, rdwr }
+attr ColorControl_ColorPointGIntensity { ColorControl, ColorControl_ColorPointGIntensity_AttrId_d, uint16, rdwr }
+attr ColorControl_ColorPointBX { ColorControl, ColorControl_ColorPointBX_AttrId_d, uint16, rdwr }
+
+// attrlists are a collection of attributes
+attrlist OnOffAttrList { OnOffAttr }
+attrlist LevelControlAttrList { LevelControl_CurrentLevelAttr, LevelControl_RemainingTimeAttr, LevelControl_OnLevelAttr }
+attrlist ColorControlAttrList
+  { ColorControl_CurrentHueAttr, 
+    ColorControl_CurrentSaturationAttr,
+    ColorControl_RemainingTimeAttr,
+    ColorControl_CurrentXAttr,
+    ColorControl_CurrentYAttr,
+    ColorControl_DriftCompensationAttr,
+    ColorControl_CompensationTextAttr,
+    ColorControl_ColorTemperatureAttr,
+    ColorControl_ColorModeAttr,
+    
+    ColorControl_NumberOfPrimaries,
+    ColorControl_Primary1X,
+    ColorControl_Primary1Y,
+    ColorControl_Primary1Intensity,
+    ColorControl_Primary2X,
+    ColorControl_Primary2Y,
+    ColorControl_Primary2Intensity,
+    ColorControl_Primary3X,
+    ColorControl_Primary3X,
+
+    ColorControl_Primary4X,
+    ColorControl_Primary4Y,
+    ColorControl_Primary4Intensity,
+    ColorControl_Primary5X,
+    ColorControl_Primary5Y,
+    ColorControl_Primary5Intensity,
+    ColorControl_Primary6X,
+    ColorControl_Primary6Y,
+    ColorControl_Primary6Intensity,
+
+    ColorControl_WhitePointX,
+    ColorControl_WhitePointY,
+    ColorControl_ColorPointRX,
+    ColorControl_ColorPointRY,
+    ColorControl_ColorPointRIntensity,
+    ColorControl_ColorPointGX,
+    ColorControl_ColorPointGY,
+    ColorControl_ColorPointGIntensity,
+    ColorControl_ColorPointBX
+  }

@@ -1,0 +1,11 @@
+pushd `dirname $0` > /dev/null
+SCRIPTPATH=`pwd`
+popd > /dev/null
+export GATEWAY=$SCRIPTPATH
+export NPI_SOURCE=$SCRIPTPATH/
+export PROTOINC=$SCRIPTPATH
+export PROTOLIB=$SCRIPTPATH/protobuf-c-arm/lib
+export PKGS_OUTPUT_DIR=$SCRIPTPATH/out
+cd scripts
+export BUILDING_FROM_SOURCE_PACKAGE="TRUE"
+./package_builder_bbb
