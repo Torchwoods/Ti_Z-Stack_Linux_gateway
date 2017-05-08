@@ -26,7 +26,8 @@ PROTOC_LIB_PATH = -L$(PROTOLIB)
 
 # Compilation tools - make sure to change the directory if its not called ti-sdk-am... 
 ARM_LIB_PATH = -L$(TCLIB)
-CC_arm = arm-linux-gnueabihf-gcc
+CC_arm = mipsel-openwrt-linux-gcc
+#arm-linux-gnueabihf-gcc
 CC_armArago = arm-arago-linux-gnueabi-gcc
 CC_x86 = gcc
 CC_arago = arm-arago-linux-gnueabi-gcc
@@ -71,7 +72,7 @@ DEFINES = -DLINUX_ZNP -DZDO_COORDINATOR -D__ZNP_DEBUG__ -DLCD_SUPPORTED  \
 
 # Compilation Option
 COMPILO_FLAGS_x86 = "-O0 -g3 -Wall $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h -include f8wConfig.h" 
-COMPILO_FLAGS_arm = "-O0 -g3 -Wall -Wno-unused-but-set-variable $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h -include f8wConfig.h -mcpu=cortex-a8 -march=armv7-a -I $(PROTOC_INC_DIR)"
+COMPILO_FLAGS_arm = "-O0 -g3 -Wall -Wno-unused-but-set-variable $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h -include f8wConfig.h -march=24kec -I $(PROTOC_INC_DIR)"
 
 # List of object file to compile
 APP_OBJS= \

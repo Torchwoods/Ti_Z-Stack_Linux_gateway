@@ -83,7 +83,8 @@ if [ -n "$MISSING_ENV" ]; then
 fi
 
 if [ $TARGET_PLATFORM == "BEAGLEBONE_BLACK" ]; then
-	export COMPILER=arm-linux-gnueabihf-gcc
+	#export COMPILER=arm-linux-gnueabihf-gcc
+	export COMPILER=mipsel-openwrt-linux-gcc
 	export BUILD_TYPE=arch-all-arm
 	export PLATFORM_SUBSTRING=arm
 elif [ $TARGET_PLATFORM == "x86" ]; then

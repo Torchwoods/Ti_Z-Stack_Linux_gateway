@@ -24,7 +24,8 @@ INCLUDES= -I application\
 CC_armBeagleBoard = arm-none-linux-gnueabi-gcc
 CC_aragoBeagleBone = arm-arago-linux-gnueabi-gcc
 # arm-arago-gnueabi-gcc is for default Angstrom that comes with BeagleBone
-CC_armBeagleBone = arm-linux-gnueabihf-gcc
+CC_armBeagleBone = mipsel-openwrt-linux-gcc
+#arm-linux-gnueabihf-gcc
 # arm-linux-gnueabihf-gcc is for Ubuntu on BeagleBone Black
 # get it here: eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC
 CC_x86 = gcc
@@ -38,7 +39,7 @@ DEFINES = -DMRDY_EARLY_FIX -DRNP_HOST -DNPI_SPI=TRUE -DNPI_UART=TRUE -DNPI_I2C=T
 #compilation Option
 COMPILO_FLAGS_x86 = "-Wall  $(INCLUDES) $(DEFINES)" 
 COMPILO_FLAGS_armBeagleBoard = "-Wall  $(INCLUDES) $(DEFINES) -mcpu=cortex-a8 -march=armv7-a"
-COMPILO_FLAGS_armBeagleBone = "-Wall  $(INCLUDES) $(DEFINES) -mcpu=cortex-a8 -march=armv7-a"
+COMPILO_FLAGS_armBeagleBone = "-Wall  $(INCLUDES) $(DEFINES) -march=24kec"
 
 #list of object file to compile for the server
 SERVER_OBJS= \

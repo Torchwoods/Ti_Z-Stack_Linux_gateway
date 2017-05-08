@@ -26,7 +26,8 @@ PROTOC_LIB_PATH = -L$(PROTOLIB)
 
 # Compilation tools - make sure to change the directory if its not called ti-sdk-am... 
 ARM_LIB_PATH = -L$(TCLIB)
-CC_arm = arm-linux-gnueabihf-gcc
+CC_arm = mipsel-openwrt-linux-gcc
+#arm-linux-gnueabihf-gcc
 CC_x86 = gcc
 CC_arago = arm-arago-linux-gnueabi-gcc
 
@@ -73,7 +74,7 @@ DEFINES = -g \
 
 # Compilation Option
 COMPILO_FLAGS_x86 = "-Wall $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h" 
-COMPILO_FLAGS_arm = "-Wall $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h -mcpu=cortex-a8 -march=armv7-a -I $(PROTOC_INC_DIR)"
+COMPILO_FLAGS_arm = "-Wall $(INCLUDES) $(DEFINES) -include ../hal/hal_types.h -march=24kec -I $(PROTOC_INC_DIR)"
 
 # List of object file to compile
 APP_OBJS= \

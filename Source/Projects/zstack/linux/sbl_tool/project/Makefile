@@ -1,7 +1,8 @@
 
 SBU_REV= "0.1"
 
-CC=arm-arago-linux-gnueabi-gcc
+CC=mipsel-openwrt-linux-gcc
+#arm-arago-linux-gnueabi-gcc
 
 CFLAGS = -Wall -DVERSION_NUMBER=${SBU_REV}
 OBJECTS = main.o zbSocCmd.o zbSocTransportUart.o

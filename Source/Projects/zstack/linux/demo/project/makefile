@@ -8,7 +8,8 @@ INCLUDE = -I$(PROJ_DIR) -I../engines -I../framework -I$(PROTOINC) -I../../nwkmgr
 
 
 #CC=gcc
-CC=arm-linux-gnueabihf-gcc
+CC=mipsel-openwrt-linux-gcc
+#arm-linux-gnueabihf-gcc
 #CC=arm-arago-linux-gnueabi-gcc
 
 CFLAGS= -c -Wall -g -std=gnu99
