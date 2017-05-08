@@ -1,3 +1,12 @@
-#ZbGateway
-cd Source
-./buil_all
+##OverView
+
+
+
+##Usage
+
+    cd Source
+
+   编译
+
+    ./build_all
+
