@@ -41,7 +41,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
-#include <execinfo.h>
+//#include <execinfo.h>
 #include <time.h>
 
 #include "hal_types.h"
@@ -154,8 +154,8 @@ int main( int argc, char *argv[] )
 
 void segmentation_fault_handler( int signum, siginfo_t *info, void *context )
 {
-  void *array[CALL_STACK_TRACE_DEPTH];
-  size_t size;
+  //void *array[CALL_STACK_TRACE_DEPTH];
+  //size_t size;
 
   uiPrintfEx(trERROR, "ERROR: signal %d was trigerred:\n", signum );
 
@@ -177,7 +177,8 @@ void segmentation_fault_handler( int signum, siginfo_t *info, void *context )
           info->si_code );
       break;
   }
-
+	
+	/*
   // get pointers for the stack entries
   size = backtrace( array, CALL_STACK_TRACE_DEPTH );
 
@@ -193,8 +194,9 @@ void segmentation_fault_handler( int signum, siginfo_t *info, void *context )
     // print out the stack frames symbols to stderr
     backtrace_symbols_fd( array, size, STDERR_FILENO );
   }
+	*/
 
-  /* unregister this handler and let the default action execute */
+	/* unregister this handler and let the default action execute */
   uiPrintfEx(trERROR, "Executing original handler...\n" );
   unregister_segmentation_fault_handler();
 }

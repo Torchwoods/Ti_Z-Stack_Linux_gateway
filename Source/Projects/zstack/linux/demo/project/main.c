@@ -48,7 +48,7 @@
 #include <stdbool.h>
 #include <arpa/inet.h>
 #include <signal.h>
-#include <execinfo.h>
+//#include <execinfo.h>
 #include <string.h>
 
 #include "timer_utils.h"
@@ -84,8 +84,8 @@ void unregister_segmentation_fault_handler(void)
 
 void segmentation_fault_handler(int signum, siginfo_t *info, void *context)
 {
-	void *array[CALL_STACK_TRACE_DEPTH];
-	size_t size;
+	//void *array[CALL_STACK_TRACE_DEPTH];
+	//size_t size;
 
 	fprintf(stderr, "ERROR: signal %d was trigerred:\n", signum);
 
@@ -105,6 +105,7 @@ void segmentation_fault_handler(int signum, siginfo_t *info, void *context)
 	}
 
 	// get pointers for the stack entries
+	/*
 	size = backtrace(array, CALL_STACK_TRACE_DEPTH);
 
 	if (size == 0)
@@ -118,7 +119,7 @@ void segmentation_fault_handler(int signum, siginfo_t *info, void *context)
 		// print out the stack frames symbols to stderr
 		backtrace_symbols_fd(array, size, STDERR_FILENO);
 	}
-
+	*/
 
 	/* unregister this handler and let the default action execute */
 	fprintf(stderr, "Executing original handler...\n");
