@@ -8,7 +8,6 @@ trunk/project/serverInfo
 .svn.bk
 *.db
 tags
-*.so
 *.o
 airkiss
 branches
