@@ -9,7 +9,7 @@
 ./Precompiled_arm/misc/ota_sample_images/5678-1234-0000AAAA.zigbee
 ./Precompiled_arm/misc/ota_sample_images/5678-1234-0000BBBB.zigbee
 ./Precompiled_arm/protobuf
-./Precompiled_arm/protobuf/libprotobuf-c.so.0
+./Precompiled_arm/protobuf/libprotobuf-c.so
 ./Precompiled_arm/servers
 ./Precompiled_arm/servers/config.ini
 ./Precompiled_arm/servers/gateway_config.tlg

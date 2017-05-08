@@ -278,7 +278,7 @@ cp $GATEWAY/Projects/zstack/linux/scripts/hagateway/track_servers $BINARIES_SERV
 cp $GATEWAY/Projects/zstack/linux/scripts/hagateway/zigbeeHAgw $BINARIES_SERVERS_DIR/
 cp $GATEWAY/Projects/zstack/linux/scripts/sample_app/* $BINARIES_SERVERS_DIR/
 
-cp "$PROTOLIB"/libprotobuf-c.so.0 $BINARIES_PROTOBUF_LIB_DIR
+cp "$PROTOLIB"/libprotobuf-c.so $BINARIES_PROTOBUF_LIB_DIR
 
 cp $GATEWAY/Projects/zstack/linux/soc_images/CC2531_USB_Dongle/CC2531*.bin $BINARIES_MISC_DIR
 
@@ -328,13 +328,13 @@ else
 		rm $PKGS_OUTPUT_DIR/sorted_actual_specific_project_file_list_all.txt
 
 		cd $PROTOLIB/../../
-		tar -hrvf $SAMPLE_APP_SOURCE_PACKAGE.tar protobuf-c-arm/lib/* > /dev/null
+		tar -hrvf $SAMPLE_APP_SOURCE_PACKAGE.tar protobuf-c-mips/lib/* > /dev/null
 
 		echo 'pushd `dirname $0` > /dev/null' >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo 'SCRIPTPATH=`pwd`' >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo 'popd > /dev/null' >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo 'export PROTOINC=$SCRIPTPATH' >>$PKGS_OUTPUT_DIR/build_sample_app
-		echo 'export PROTOLIB=$SCRIPTPATH'/protobuf-c-arm/lib >>$PKGS_OUTPUT_DIR/build_sample_app
+		echo 'export PROTOLIB=$SCRIPTPATH'/protobuf-c-mips/lib >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo cd Projects/zstack/linux/demo/project >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo make clean >>$PKGS_OUTPUT_DIR/build_sample_app
 		echo make CC=$COMPILER >>$PKGS_OUTPUT_DIR/build_sample_app
@@ -424,7 +424,7 @@ else
 		tar -rvf $SOURCE_PACKAGE_NAME.tar Projects/zstack/linux/soc_images/CC2531_USB_Dongle/CC2531*.hex > /dev/null
 
 		cd $PROTOLIB/../../
-		tar -hrvf $SOURCE_PACKAGE_NAME.tar protobuf-c-arm/lib/* > /dev/null
+		tar -hrvf $SOURCE_PACKAGE_NAME.tar protobuf-c-mips/lib/* > /dev/null
 		
 		echo 'pushd `dirname $0` > /dev/null' >>$PKGS_OUTPUT_DIR/build_all
 		echo 'SCRIPTPATH=`pwd`' >>$PKGS_OUTPUT_DIR/build_all
@@ -432,7 +432,7 @@ else
 		echo 'export GATEWAY=$SCRIPTPATH' >>$PKGS_OUTPUT_DIR/build_all
 		echo 'export NPI_SOURCE=$SCRIPTPATH/' >>$PKGS_OUTPUT_DIR/build_all
 		echo 'export PROTOINC=$SCRIPTPATH' >>$PKGS_OUTPUT_DIR/build_all
-		echo 'export PROTOLIB=$SCRIPTPATH'/protobuf-c-arm/lib >>$PKGS_OUTPUT_DIR/build_all
+		echo 'export PROTOLIB=$SCRIPTPATH'/protobuf-c-mips/lib >>$PKGS_OUTPUT_DIR/build_all
 		echo 'export PKGS_OUTPUT_DIR=$SCRIPTPATH'/out >>$PKGS_OUTPUT_DIR/build_all
 		echo 'cd scripts' >>$PKGS_OUTPUT_DIR/build_all
 		echo 'export BUILDING_FROM_SOURCE_PACKAGE="TRUE"' >>$PKGS_OUTPUT_DIR/build_all

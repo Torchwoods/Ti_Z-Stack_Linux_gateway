@@ -4,7 +4,7 @@ popd > /dev/null
 export GATEWAY=$SCRIPTPATH
 export NPI_SOURCE=$SCRIPTPATH/
 export PROTOINC=$SCRIPTPATH
-export PROTOLIB=$SCRIPTPATH/protobuf-c-arm/lib
+export PROTOLIB=$SCRIPTPATH/protobuf-c-mips/lib
 export PKGS_OUTPUT_DIR=$SCRIPTPATH/out
 cd scripts
 export BUILDING_FROM_SOURCE_PACKAGE="TRUE"
