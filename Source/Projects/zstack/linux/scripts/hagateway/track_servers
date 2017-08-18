@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 #
 # track servers - send a signal if any server dies other than NWKMGR
 #

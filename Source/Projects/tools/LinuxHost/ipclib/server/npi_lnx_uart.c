@@ -94,7 +94,7 @@ extern struct timeval startTime, prevTimeSend, prevTimeRec;
 #define NPI_CBACK_BUF_HDR_LEN (sizeof(npiAsyncDataHdr_t) + NPI_MSG_DATA_HDR_LEN)
 
 // Time out value for response from RNP
-#define NPI_RNP_TIMEOUT 6 // 6 seconds
+#define NPI_RNP_TIMEOUT 10 // 6 seconds
 
 // UART Baud rate
 #define NPI_BAUDRATE B115200

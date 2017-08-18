@@ -1,4 +1,4 @@
-#! /bin/bash                                               
+#! /bin/sh                                               
 #
 # zigbeeHAGw - script to start/stop zigbee gateway servers
 # 
@@ -40,7 +40,7 @@ ZBEE_RESET_INACTIVE_VALUE=1
 ZBEE_RESET_EXPLICIT_REVERSE=1
 PROCESSOR_ZBEE_RESET_PIN=
 ZBEE_SERIAL_PORT=
-ignore_zbee_reset=0
+ignore_zbee_reset=1
 
 if [ -n "$VERBOSE_GW_SCRIPT" ]; then
   if [ $VERBOSE_GW_SCRIPT -ge 1 ]; then
@@ -56,7 +56,7 @@ if [ "$MERGE_OUTPUT" = "" ]; then
 fi
 
 # UART baud rate settings
-UART_BAUDRATE=115200 
+UART_BAUDRATE=115200
 
 # these are exit codes from network manager that we look for
 # the network manager exit code determines how this script
@@ -284,7 +284,7 @@ else
 		# and as such an explicit reverse isnt needed
 		ZBEE_RESET_EXPLICIT_REVERSE=0
 		ZBEE_RESET_GPIO_LINE=77
-		ZBEE_SERIAL_PORT=ttyACM0
+		ZBEE_SERIAL_PORT=ttyS0
 		setup_for_arm
 		;;	
 
@@ -994,7 +994,7 @@ hw_reset_soc()
 		sleep $hw_reset_sleep 
 
                 # query the znp for its sw version
-	        ../tools/gw_soc_fw_version_query.bin /dev/ttyACM0
+	        ../tools/gw_soc_fw_version_query.bin /dev/ttyS0
 
 		echo done
 		;;

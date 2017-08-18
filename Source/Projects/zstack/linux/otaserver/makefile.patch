@@ -1,0 +1,66 @@
+--- Makefile	2017-08-17 14:39:33.069185912 +0800
++++ Makefile2	2017-08-18 13:01:13.335625614 +0800
+@@ -1,4 +1,4 @@
+-# Makefile for Linux OTA Server Application
++#Makefile for Linux OTA Server Application
+ 
+ # Check to see if environment variables have been set
+ ifndef PROTOINC	
+@@ -26,8 +26,7 @@
+ 
+ # Compilation tools - make sure to change the directory if its not called ti-sdk-am... 
+ ARM_LIB_PATH = -L$(TCLIB)
+-CC_arm = mipsel-openwrt-linux-gcc
+-#arm-linux-gnueabihf-gcc
++CC_arm = arm-linux-gnueabi-gcc
+ CC_arago = arm-arago-linux-gnueabi-gcc
+ CC_x86 = gcc
+ 
+@@ -69,12 +68,13 @@
+ 	-DHAL_OTA_BOOT_CODE \
+ 	-DZCL_READ \
+ 	-DOTA_HA \
+-	-DSERVER_NAME=OTASRVR
++	-DSERVER_NAME=OTASRVR \
++	-DNPI_UNIX \
+ #	-D__APP_UI__ \
+ 
+ # Compilation Option
+ COMPILO_FLAGS_x86 = " -g -Wall $(INCLUDES) $(DEFINES) -include hal_types.h -include AF.h -include zcl.h -include zcl_ota.h "
+-COMPILO_FLAGS_arm = " -Wall $(INCLUDES) $(DEFINES) -include hal_types.h -include AF.h -include zcl.h -include zcl_ota.h -march=24kec -I $(PROTOC_INC_DIR)"
++COMPILO_FLAGS_arm = " -Wall $(INCLUDES) $(DEFINES) -include hal_types.h -include AF.h -include zcl.h -include zcl_ota.h -mcpu=arm926ej-s -march=armv5te -I $(PROTOC_INC_DIR) -Wl,-rpath,/usr/arm-linux-gnueabi/lib"
+ 
+ # List of object file to compile
+ APP_OBJS= \
+@@ -149,7 +149,7 @@
+ 
+ $(OBJS)/OTA_SRVR_arm: $(APP_OBJS)
+ 	@echo "Building target" $@ "..."
+-	@$(COMPILO) -o $@ $(APP_OBJS) $(ARM_LIB_PATH) $(PROTOC_LIB_PATH) $(LIBS_arm) 
++	@$(COMPILO) -o $@ $(APP_OBJS) $(COMPILO_FLAGS) $(ARM_LIB_PATH) $(PROTOC_LIB_PATH) $(LIBS_arm) 
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then echo $(MAKEFILE_LIST) | $(EXTRACT_FILES) >> project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep -v /usr/ >actual_specific_project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep /usr/ >actual_standard_project_file_list.txt; fi
+@@ -157,7 +157,7 @@
+ 
+ $(OBJS)/OTA_SRVR_arago: $(APP_OBJS)
+ 	@echo "Building target" $@ "..."
+-	@$(COMPILO) -o $@ $(APP_OBJS) $(ARM_LIB_PATH) $(PROTOC_LIB_PATH) $(LIBS_arm) 
++	@$(COMPILO) -o $@ $(APP_OBJS) $(COMPILO_FLAGS) $(ARM_LIB_PATH) $(PROTOC_LIB_PATH) $(LIBS_arm) 
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then echo $(MAKEFILE_LIST) | $(EXTRACT_FILES) >> project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep -v /usr/ >actual_specific_project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep /usr/ >actual_standard_project_file_list.txt; fi
+@@ -166,7 +166,7 @@
+ 
+ $(OBJS)/OTA_SRVR_x86: $(APP_OBJS)
+ 	@echo "Building target" $@ "..."
+-	@$(COMPILO) -o $@ $(APP_OBJS) $(LIBS_x86)
++	@$(COMPILO) -o $@ $(APP_OBJS) $(COMPILO_FLAGS) $(LIBS_x86)
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then echo $(MAKEFILE_LIST) | $(EXTRACT_FILES) >> project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep -v /usr/ >actual_specific_project_file_list.txt; fi
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then sort -u -V project_file_list.txt | grep /usr/ >actual_standard_project_file_list.txt; fi
+@@ -281,3 +281,4 @@
+ 	@echo "Compiling" $< "..."
+ 	@$(COMPILO) -c -o $@ $(COMPILO_FLAGS) $<
+ 	@if [ -n "$(EXTRACT_FILES)" ]; then $(COMPILO) -M $< $(COMPILO_FLAGS) | $(EXTRACT_FILES) >> project_file_list.txt; fi
++

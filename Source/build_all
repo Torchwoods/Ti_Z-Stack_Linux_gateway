@@ -1,6 +1,8 @@
 pushd `dirname $0` > /dev/null
 SCRIPTPATH=`pwd`
 popd > /dev/null
+
+#export TCLIB=
 export GATEWAY=$SCRIPTPATH
 export NPI_SOURCE=$SCRIPTPATH/
 export PROTOINC=$SCRIPTPATH

@@ -471,7 +471,7 @@ fi
 if (($warnings_count > 0))
 then
     echo "ERROR: $warnings_count warning(s) occured during make"
-	export PACKAGE_ERROR="TRUE"
+#	export PACKAGE_ERROR="TRUE"
 fi
 
 cd $PKGS_OUTPUT_DIR
