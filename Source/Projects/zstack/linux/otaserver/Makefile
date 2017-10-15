@@ -117,13 +117,13 @@ arch-all-x86:
 arch-all-arm: 
 	@echo "********************************************************" 
 	@echo "COMPILING APP FOR ARM" 
-	export ARCH=arm
+	export ARCH=mips
 	@$(MAKE) COMPILO=$(CC_arm) COMPILO_FLAGS=$(COMPILO_FLAGS_arm) exec_app_arm
 
 arch-all-arago:
 	@echo "********************************************************" 
 	@echo "COMPILING APP FOR ARM" 
-	export ARCH=arm
+	export ARCH=mips
 	@$(MAKE) COMPILO=$(CC_arago) COMPILO_FLAGS=$(COMPILO_FLAGS_arm) exec_app_arago
 
 exec_app_x86: $(OBJS)/OTA_SRVR_x86
